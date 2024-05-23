@@ -1,5 +1,6 @@
 package com.quessionary.app.Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -20,6 +21,7 @@ public class Answer {
     private UUID id;
 
     @ManyToOne
+    @JsonBackReference
     private Question question;
 
     @Column(nullable = false)
@@ -30,5 +32,6 @@ public class Answer {
     private Date createdAt;
 
     @ManyToOne
+    @JsonBackReference
     private User user;
 }

@@ -1,5 +1,6 @@
 package com.quessionary.app.Models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -28,11 +29,13 @@ public class User {
     @Column(nullable = true)
     private String bio;
 
-    @Column(nullable = false)
-    @OneToMany(mappedBy = "user")
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Question> questions = new ArrayList<>();
 
-    @OneToMany(mappedBy= "user")
+    @JsonManagedReference
+    @OneToMany(mappedBy= "user", fetch = FetchType.LAZY)
     private List<Answer> answers = new ArrayList<>() ;
 
 }

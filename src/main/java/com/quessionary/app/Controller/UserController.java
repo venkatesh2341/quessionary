@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.annotation.Repeatable;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -36,5 +38,21 @@ public class UserController {
         if(user == null)
             return new ResponseEntity<String>("User not found",HttpStatus.NOT_FOUND);
         else return new  ResponseEntity<User>(user,HttpStatus.OK);
+    }
+
+    @GetMapping("/")
+    ResponseEntity<?> getUsers()
+    {
+        List<User> users= userService.getUsers();
+        return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+    }
+
+    @PutMapping("/{userId}")
+    ResponseEntity<?> updateUser(@PathVariable UUID userId, @RequestBody UserDTO userDTO)
+    {
+        User user= userService.updateUser(userId, userDTO);
+        if(user != null)
+            return new ResponseEntity<User>(user,HttpStatus.OK);
+        else return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
     }
 }

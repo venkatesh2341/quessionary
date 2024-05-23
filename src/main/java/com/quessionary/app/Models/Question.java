@@ -1,5 +1,7 @@
 package com.quessionary.app.Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -35,8 +37,10 @@ public class Question {
     private Date createdAt;
 
     @ManyToOne
+    @JsonBackReference
     private User  user;
 
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Answer> answers  = new ArrayList<>();
 }

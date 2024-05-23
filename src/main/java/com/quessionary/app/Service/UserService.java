@@ -5,6 +5,7 @@ import com.quessionary.app.Models.User;
 import com.quessionary.app.Repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -40,6 +41,28 @@ public class UserService {
         if(user.isPresent())
         {
             return user.get();
+        }
+        return null;
+    }
+
+    public List<User> getUsers()
+    {
+        return userRepository.findAll();
+    }
+
+    public User updateUser(UUID userid, UserDTO userDto)
+    {
+        Optional<User> user = userRepository.findById(userid);
+        if(user.isPresent())
+        {
+            if(userDto.getUserName() != null)
+                user.get().setUserName(userDto.getUserName());
+            if(userDto.getEmail() != null)
+                user.get().setEmail(userDto.getEmail());
+            if(userDto.getBio() != null)
+                user.get().setBio(userDto.getBio());
+
+            return userRepository.save(user.get());
         }
         return null;
     }
