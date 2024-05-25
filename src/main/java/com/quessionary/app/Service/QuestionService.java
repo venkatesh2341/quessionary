@@ -7,6 +7,7 @@ import com.quessionary.app.Repository.QuestionRepository;
 import com.quessionary.app.Repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -33,5 +34,9 @@ public class QuestionService {
                 .body(questionDTO.getBody())
                .build();
         return questionRepository.save(question);
+    }
+
+    public List<Question> getAllQuestions(){
+        return questionRepository.findAll();
     }
 }

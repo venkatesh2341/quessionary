@@ -6,16 +6,15 @@ import com.quessionary.app.Repository.QuestionRepository;
 import com.quessionary.app.Service.QuestionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/questions")
 public class QuestionController {
 
-    private QuestionService questionService;
+    final private QuestionService questionService;
 
     QuestionController(QuestionService questionService)
     {
@@ -31,5 +30,12 @@ public class QuestionController {
 
         return new ResponseEntity<String>("User not found", HttpStatus.NOT_FOUND);
 
+    }
+
+    @GetMapping("/")
+    ResponseEntity<?> getAllQuestions()
+    {
+        List<Question> questions = questionService.getAllQuestions();
+        return new ResponseEntity<List<Question>>(questions, HttpStatus.OK);
     }
 }

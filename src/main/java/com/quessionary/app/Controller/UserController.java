@@ -15,7 +15,7 @@ import java.util.UUID;
 @RequestMapping("/users")
 public class UserController {
 
-    private UserService userService;
+    final private UserService userService;
 
     UserController(UserService userService)
     {
@@ -54,5 +54,14 @@ public class UserController {
         if(user != null)
             return new ResponseEntity<User>(user,HttpStatus.OK);
         else return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+    }
+
+    @DeleteMapping("/{userId}")
+    ResponseEntity<?> deleteUser(@PathVariable UUID userId)
+    {
+        boolean response= userService.deleteUser(userId);
+        if(!response)
+            return new ResponseEntity<String>("User not found",HttpStatus.NOT_FOUND);
+        return new ResponseEntity<String>("User deleted", HttpStatus.OK);
     }
 }

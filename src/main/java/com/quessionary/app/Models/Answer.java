@@ -3,6 +3,7 @@ package com.quessionary.app.Models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.util.Date;
 import java.util.UUID;
@@ -29,6 +30,7 @@ public class Answer {
 
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
+    @CreatedDate
     private Date createdAt;
 
     @ManyToOne

@@ -67,4 +67,13 @@ public class UserService {
         return null;
     }
 
+    public boolean deleteUser(UUID userId)
+    {
+        Optional<User> user=  userRepository.findById(userId);
+        if(user.isEmpty())
+            return false;
+        userRepository.deleteById(userId);
+        return true;
+    }
+
 }
